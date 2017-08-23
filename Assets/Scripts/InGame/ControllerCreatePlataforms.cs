@@ -22,13 +22,14 @@ public class ControllerCreatePlataforms : MonoBehaviour {
 
 //		Instantiate (left);
 //		Instantiate (up);
-//		Instantiate (down);
+		Instantiate (right);
+		lastDirection.z = right.transform.eulerAngles.z; 
 		lastLinePosition = new Vector3 (0,0,0);
 	}
 
 	void FixedUpdate(){
 //		if (lines.Count <= 10){
-//			CreatesNextLine ();
+			CreateNextLine ();
 //		}
 	}
 	void CreateNextLine(){
@@ -86,8 +87,10 @@ public class ControllerCreatePlataforms : MonoBehaviour {
 
 	void InstantiateLines(GameObject line, Vector3 nextPosition){
 		nextLinePosition = lastLinePosition+nextPosition;
-		Debug.Log (nextPosition);
-		Instantiate (line,nextLinePosition, Quaternion.identity);
+		Debug.Log ("nextpoint: "+nextPosition);
+		Debug.Log ("next Position: "+nextLinePosition);
+		Quaternion angulo = line.transform.localRotation;
+		Instantiate (line,nextLinePosition, angulo);
 
 		lastLinePosition = nextLinePosition;
 		lastDirection.z = line.transform.eulerAngles.z;
