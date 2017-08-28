@@ -11,7 +11,8 @@ public class ControllerCreatePlataforms : MonoBehaviour {
 	Vector3 lastDirection;
 
 	Vector3 positionPlayer, lastLinePosition, nextLinePosition ;
-		
+
+
 	// Update is called once per frame
 	void Start () {
 		lines = new List<GameObject>();
@@ -22,76 +23,84 @@ public class ControllerCreatePlataforms : MonoBehaviour {
 
 //		Instantiate (left);
 //		Instantiate (up);
-		Instantiate (right);
+		GameObject instance = Instantiate (right);
+		lines.Add (instance);
 		lastDirection.z = right.transform.eulerAngles.z; 
 		lastLinePosition = new Vector3 (0,0,0);
+
 	}
 
 	void FixedUpdate(){
-//		if (lines.Count <= 10){
+		
+		if (lines.Count <= 2){
+			Debug.Log (lines.Count);
 			CreateNextLine ();
-//		}
+		}
+		for (int i = 0; i < lines.Count; i++) {
+			if (lines[i] == null) {
+				lines.RemoveAt (i);
+				}
+			}
 	}
+
 	void CreateNextLine(){
 		int randomDirection = Random.Range(0,100);
 		//up
-
-		if (lastDirection.z == 0) {
+		if (lastDirection.z == 0) { 
 			if (randomDirection <= 33){
-				InstantiateLines (left, new Vector3(0,4,0));
+				InstantiateLines (left, new Vector3(1.1f,9f,0));
 			}
 			if (randomDirection > 33 && randomDirection <= 67){
-				InstantiateLines (up, new Vector3(0,4,0));
+				InstantiateLines (up, new Vector3(0,8.5f,0));
 			}
 			if (randomDirection > 67 && randomDirection <= 100){
-				InstantiateLines (right, new Vector3(0,4,0));
+				InstantiateLines (right, new Vector3(-1.1f,9f,0));
 			}
 		}
 		//right
 		if (lastDirection.z == 270) {
 			if (randomDirection <= 33){
-				InstantiateLines (up, new Vector3(4,0,0));
+				InstantiateLines (up, new Vector3(9f,-1.1f,0));
 			}
 			if (randomDirection > 33 && randomDirection <= 67){
-				InstantiateLines (right, new Vector3(4,0,0));
+				InstantiateLines (right, new Vector3(8.5f,0,0));
 			}
 			if (randomDirection > 67 && randomDirection <= 100){
-				InstantiateLines (down, new Vector3(4,0,0));
+				InstantiateLines (down, new Vector3(9f,1.1f,0));
 			}
 		}
 		//down
 		if (lastDirection.z == 180) {
 			if (randomDirection <= 33){
-				InstantiateLines (right, new Vector3(0,-4,0));
+				InstantiateLines (right, new Vector3(-1.1f,-9f,0));
 			}
 			if (randomDirection > 33 && randomDirection <= 67){
-				InstantiateLines (down, new Vector3(0,-4,0));
+				InstantiateLines (down, new Vector3(0,-8.5f,0));
 			}
 			if (randomDirection > 67 && randomDirection <= 100){
-				InstantiateLines (left, new Vector3(0,-4,0));
+				InstantiateLines (left, new Vector3(1.1f,-9f,0));
 			}
 		}
 		//left
 		if (lastDirection.z == 90) {
 			if (randomDirection <= 33){
-				InstantiateLines (left, new Vector3(-4,0,0));
+				InstantiateLines (left, new Vector3(-8.5f,0,0));
 			}
 			if (randomDirection > 33 && randomDirection <= 67){
-				InstantiateLines (down, new Vector3(-4,0,0));
+				InstantiateLines (down, new Vector3(-9f,1.1f,0));
 			}
 			if (randomDirection > 67 && randomDirection <= 100){
-				InstantiateLines (left, new Vector3(-4,0,0));
+				InstantiateLines (up, new Vector3(-9f,-1.1f,0));
 			}
 		}
 	}
 
 	void InstantiateLines(GameObject line, Vector3 nextPosition){
 		nextLinePosition = lastLinePosition+nextPosition;
-		Debug.Log ("nextpoint: "+nextPosition);
-		Debug.Log ("next Position: "+nextLinePosition);
 		Quaternion angulo = line.transform.localRotation;
-		Instantiate (line,nextLinePosition, angulo);
-
+		GameObject lineInstance = Instantiate (line,nextLinePosition, angulo);
+		lines.Add (lineInstance);
+		transform.position = nextLinePosition;
 		lastLinePosition = nextLinePosition;
 		lastDirection.z = line.transform.eulerAngles.z;
 	}
@@ -101,11 +110,6 @@ public class ControllerCreatePlataforms : MonoBehaviour {
 		down = (GameObject)Resources.Load ("Prefabs/LinhaDown");;
 		left = (GameObject)Resources.Load ("Prefabs/LinhaLeft");;
 		right = (GameObject)Resources.Load ("Prefabs/LinhaRight");;
-
-//		Debug.Log(right.transform.eulerAngles.z);
-//		Debug.Log(up.transform.eulerAngles.z);
-//		Debug.Log(down.transform.eulerAngles.z);
-//		Debug.Log(left.transform.eulerAngles.z);
 	}
 
 
