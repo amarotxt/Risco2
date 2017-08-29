@@ -6,13 +6,14 @@ public class Player {
 	public float Points;
 	public float acceleration;
 	public float speed;
-	public int directionX;
-	public int directionY;
+	public Vector2 direction;
 
+	public float minSwipeLength = 5f;
+	// Swipe
+	public Vector2 firstPressPos;
+	public Vector2 secondPressPos;
+	public Vector2 currentSwipe;
+	public Vector2 firstClickPos;
+	public Vector2 secondClickPos;
 
-	public void SetDirection( int directionX, int directionY){
-		this.directionX = directionX;
-		this.directionY = directionY;
-
-	}
 }

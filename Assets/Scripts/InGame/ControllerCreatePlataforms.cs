@@ -31,16 +31,13 @@ public class ControllerCreatePlataforms : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		
-		if (lines.Count <= 2){
-			Debug.Log (lines.Count);
-			CreateNextLine ();
-		}
 		for (int i = 0; i < lines.Count; i++) {
 			if (lines[i] == null) {
 				lines.RemoveAt (i);
 				}
 			}
+			CreateNextLine ();
+
 	}
 
 	void CreateNextLine(){
@@ -96,13 +93,15 @@ public class ControllerCreatePlataforms : MonoBehaviour {
 	}
 
 	void InstantiateLines(GameObject line, Vector3 nextPosition){
+		if (lines.Count < 3) {
 		nextLinePosition = lastLinePosition+nextPosition;
 		Quaternion angulo = line.transform.localRotation;
-		GameObject lineInstance = Instantiate (line,nextLinePosition, angulo);
-		lines.Add (lineInstance);
-		transform.position = nextLinePosition;
-		lastLinePosition = nextLinePosition;
-		lastDirection.z = line.transform.eulerAngles.z;
+			GameObject lineInstance = Instantiate (line, nextLinePosition, angulo);		
+			lines.Add (lineInstance);
+			transform.position = nextLinePosition;
+			lastLinePosition = nextLinePosition;
+			lastDirection.z = line.transform.eulerAngles.z;
+		}
 	}
 
 	void StartLines(){
