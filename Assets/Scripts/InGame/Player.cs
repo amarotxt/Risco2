@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player {
-	public float Points;
+	public float points;
+	public float aumento = 0.5f;
+
 	public float acceleration;
 	public float speed;
 	public Vector2 direction;
@@ -15,5 +17,7 @@ public class Player {
 	public Vector2 currentSwipe;
 	public Vector2 firstClickPos;
 	public Vector2 secondClickPos;
+
+	public bool inLine;
 
 }
