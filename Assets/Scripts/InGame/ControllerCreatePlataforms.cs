@@ -50,7 +50,7 @@ public class ControllerCreatePlataforms : MonoBehaviour {
 				InstantiateLines (left, new Vector3(0,distance,0));
 			}
 			if (randomDirection > 33 && randomDirection <= 67){
-				InstantiateLines (up, new Vector3(0,distance,0));
+				InstantiateLines (up, new Vector3(0,distance-1,0));
 			}
 			if (randomDirection > 67 && randomDirection <= 100){
 				InstantiateLines (right, new Vector3(0,distance,0));
@@ -62,7 +62,7 @@ public class ControllerCreatePlataforms : MonoBehaviour {
 				InstantiateLines (up, new Vector3(distance,0,0));
 			}
 			if (randomDirection > 33 && randomDirection <= 67){
-				InstantiateLines (right, new Vector3(distance,0,0));
+				InstantiateLines (right, new Vector3(distance-1,0,0));
 			}
 			if (randomDirection > 67 && randomDirection <= 100){
 				InstantiateLines (down, new Vector3(distance,0,0));
@@ -74,7 +74,7 @@ public class ControllerCreatePlataforms : MonoBehaviour {
 				InstantiateLines (right, new Vector3(0,-distance,0));
 			}
 			if (randomDirection > 33 && randomDirection <= 67){
-				InstantiateLines (down, new Vector3(0,-distance,0));
+				InstantiateLines (down, new Vector3(0,-distance+1,0));
 			}
 			if (randomDirection > 67 && randomDirection <= 100){
 				InstantiateLines (left, new Vector3(0,-distance,0));
@@ -83,7 +83,7 @@ public class ControllerCreatePlataforms : MonoBehaviour {
 		//left
 		if (lastDirection.z == 90) {
 			if (randomDirection <= 33){
-				InstantiateLines (left, new Vector3(-distance,0,0));
+				InstantiateLines (left, new Vector3(-distance+1,0,0));
 			}
 			if (randomDirection > 33 && randomDirection <= 67){
 				InstantiateLines (down, new Vector3(-distance,0,0));

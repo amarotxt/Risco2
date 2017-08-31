@@ -576,7 +576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointsText: {fileID: 459617666}
-  bonusText: {fileID: 0}
+  bonusText: {fileID: 778776848}
   linesObjects: {fileID: 1893717254}
 --- !u!23 &1803343856
 MeshRenderer:
