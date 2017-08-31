@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum Swipe { None, Up, Down, Left, Right };
 
 public class ControllerPlayer : MonoBehaviour {
 	Player player;
+	public Text pointsText;
+	public Text bonusText;
+
+	public GameObject linesObjects;
 
 	public static Swipe swipeDirection;
 
@@ -16,14 +22,15 @@ public class ControllerPlayer : MonoBehaviour {
 		player.direction =new Vector2(1,0);
 		player.inLine = true;
 		player.acceleration = 2;
-
+		player.points = 0;
+		player.bonus = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		calcularPontuacao ();
-		calcularVelocidade ();
-
+		CalcularPontuacao ();
+		CalcularVelocidade ();
+		pointsText.text = player.points.ToString ("00");
 		if (player.direction.x == 1 && player.direction.y == 0 ){
 			transform.Translate (player.acceleration*Time.deltaTime*Vector3.right);
 		}else if (player.direction.x == -1 && player.direction.y == 0 ){
@@ -31,27 +38,42 @@ public class ControllerPlayer : MonoBehaviour {
 		}else if (player.direction.x == 0 && player.direction.y == 1 ){
 			transform.Translate (player.acceleration*Time.deltaTime*Vector3.up);
 		}else if (player.direction.x == 0 && player.direction.y == -1 ){
+
+
 			transform.Translate (player.acceleration*Time.deltaTime*Vector3.down);
 		}
-			DetectSwipe ();
+		DetectSwipe ();
 
+
+	}
+	IEnumerator GameOverRoutine(){
+		yield return new WaitForSeconds (0.5f);
+		CheckGameOver ();
+	}
+
+	public void CheckGameOver (){
+		if (!player.inLine) {
+			
+			SceneManager.LoadScene (0);
+		}
 	}
 
 	void OnTriggerStay2D(Collider2D other) {
 		if (other.gameObject.CompareTag("Line")){
 			player.inLine = true;
-			Debug.Log (player.inLine);
 		}
 	}
 
 	void OnTriggerExit2D(Collider2D other) {
 		if (other.gameObject.CompareTag("Line")){
 			player.inLine = false;
-			Debug.Log (player.inLine);
+
+			player.gameOverRoutine = StartCoroutine("GameOverRoutine");
 		}
 	}
 
-	void  calcularPontuacao(){
+	void  CalcularPontuacao(){
+		
 		player.points = player.aumento + player.points;
 //		if (player.points > PlayerPrefs.GetFloat ("Recorde")){
 //			if (podeTocarRecord && PlayerPrefs.GetFloat("Recorde") != 0) {
@@ -60,11 +82,8 @@ public class ControllerPlayer : MonoBehaviour {
 //			}
 //		}
 	}
-	public void calcularVelocidade(){
-		if ((float)Math.Log (player.points, 2) % 2 == 0 || (float)Math.Log (player.points, 2) % 2 == 1) {
+	public void CalcularVelocidade(){
 			player.acceleration = (float)Math.Log (player.points, 2) ;
-		}
-
 	}
 
 	public void DetectSwipe (){
@@ -88,20 +107,24 @@ public class ControllerPlayer : MonoBehaviour {
 				if (player.direction.x != 0) { 
 					// Swipe up
 					if (player.currentSwipe.y > 0 && player.currentSwipe.x > -0.5f && player.currentSwipe.x < 0.5f) {
+						CheckBonusPoints ();
 						player.direction = new Vector2 (0, 1);
 					}
 					// Swipe down
 					else if (player.currentSwipe.y < 0 && player.currentSwipe.x > -0.5f && player.currentSwipe.x < 0.5f) {
+						CheckBonusPoints ();
 						player.direction = new Vector2 (0, -1);
 					}
 				}
 				if (player.direction.y != 0) {
 					// Swipe left
 					if (player.currentSwipe.x < 0 && player.currentSwipe.y > -0.5f && player.currentSwipe.y < 0.5f) {
+						CheckBonusPoints ();
 						player.direction = new Vector2(-1,0);				
 					}
 					// Swipe right
 					else if (player.currentSwipe.x > 0 && player.currentSwipe.y > -0.5f && player.currentSwipe.y < 0.5f) {
+						CheckBonusPoints ();
 						player.direction = new Vector2(1,0);				
 					}
 				}
@@ -122,20 +145,24 @@ public class ControllerPlayer : MonoBehaviour {
 				if (player.direction.x != 0) { 
 					// Swipe up
 					if (player.currentSwipe.y > 0 && player.currentSwipe.x > -0.5f && player.currentSwipe.x < 0.5f) {
+						CheckBonusPoints ();
 						player.direction = new Vector2 (0, 1);
 					}
 					// Swipe down
 					else if (player.currentSwipe.y < 0 && player.currentSwipe.x > -0.5f && player.currentSwipe.x < 0.5f) {
+						CheckBonusPoints ();
 						player.direction = new Vector2 (0, -1);
 					}
 				}
 				if (player.direction.y != 0) {
 					// Swipe left
 					if (player.currentSwipe.x < 0 && player.currentSwipe.y > -0.5f && player.currentSwipe.y < 0.5f) {
+						CheckBonusPoints ();
 						player.direction = new Vector2 (-1, 0);				
 					}
 					// Swipe right
 					else if (player.currentSwipe.x > 0 && player.currentSwipe.y > -0.5f && player.currentSwipe.y < 0.5f) {
+						CheckBonusPoints ();
 						player.direction = new Vector2 (1, 0);				
 					}
 				}
@@ -143,6 +170,30 @@ public class ControllerPlayer : MonoBehaviour {
 		}
 	}
 
+	void CheckBonusPoints(){
+		float distanceNextLine = Vector3.Distance (linesObjects.transform.GetChild(1).transform.position, transform.position);
+//		Debug.Log ("erro: " + distanceNextLine);
+		if( distanceNextLine >= 0.5){
+//			Debug.Log ("Bad"+distanceNextLine);
+			player.aumento = 0.5f;
+			player.bonus = 0;
+			bonusText.text = player.bonus.ToString()+"x";
+		}
+		if( distanceNextLine < 0.5 && distanceNextLine >= 0.2f ){
+//			Debug.Log ("Good"+distanceNextLine);
+			player.aumento += 0.5f;
+			player.bonus += 1;
+			bonusText.text = player.bonus.ToString()+"x";
 
+		}
+		if( distanceNextLine < 0.2f && distanceNextLine >= 0 ){
+//			Debug.Log ("Perfect"+distanceNextLine);
+			player.aumento += 0.5f;
+			player.bonus += 1;
+			bonusText.text = player.bonus.ToString()+"x";
+
+		}
+
+	}
 
 }
