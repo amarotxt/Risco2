@@ -17,7 +17,7 @@ public class ControllerCreatePlataforms : MonoBehaviour {
 	// Update is called once per frame
 	void Start () {
 		lines = new List<GameObject>();
-
+		ControllerPopup.Initialize ();
 		player = GameObject.FindGameObjectWithTag ("Player");
 		StartLines ();
 	

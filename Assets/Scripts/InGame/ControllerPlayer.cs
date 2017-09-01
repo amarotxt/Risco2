@@ -13,11 +13,15 @@ public class ControllerPlayer : MonoBehaviour {
 	public Text bonusText;
 
 	public GameObject linesObjects;
-
+	GameObject playerMoviments;
+	PlayerMoviments savePositions;
+	public List<Vector3> positionsMoviments;
 	public static Swipe swipeDirection;
 
 	// Use this for initialization
 	void Start () {
+		playerMoviments = GameObject.Find ("PlayerMoviments");
+		savePositions = playerMoviments.GetComponent<PlayerMoviments>();
 		player = new Player ();
 		player.direction =new Vector2(1,0);
 		player.inLine = true;
@@ -53,8 +57,8 @@ public class ControllerPlayer : MonoBehaviour {
 
 	public void CheckGameOver (){
 		if (!player.inLine) {
-			
-			SceneManager.LoadScene (0);
+			DontDestroyOnLoad (playerMoviments);
+			SceneManager.LoadScene (1);
 		}
 	}
 
@@ -147,6 +151,7 @@ public class ControllerPlayer : MonoBehaviour {
 					if (player.currentSwipe.y > 0 && player.currentSwipe.x > -0.5f && player.currentSwipe.x < 0.5f) {
 						CheckBonusPoints ();
 						player.direction = new Vector2 (0, 1);
+
 					}
 					// Swipe down
 					else if (player.currentSwipe.y < 0 && player.currentSwipe.x > -0.5f && player.currentSwipe.x < 0.5f) {
@@ -173,21 +178,26 @@ public class ControllerPlayer : MonoBehaviour {
 	void CheckBonusPoints(){
 		float distanceNextLine = Vector3.Distance (linesObjects.transform.GetChild(1).transform.position, transform.position);
 //		Debug.Log ("erro: " + distanceNextLine);
+
+		savePositions.SavePositionsPlayer (transform.position);
 		if( distanceNextLine >= 0.5){
 //			Debug.Log ("Bad"+distanceNextLine);
+			ControllerPopup.CreatingDamagePopupText("Bad!", transform);
 			player.aumento = 0.5f;
 			player.bonus = 0;
 			bonusText.text = player.bonus.ToString()+"x";
 		}
 		if( distanceNextLine < 0.5 && distanceNextLine >= 0.2f ){
-//			Debug.Log ("Good"+distanceNextLine);
+			//			Debug.Log ("Good"+distanceNextLine);
+			ControllerPopup.CreatingDamagePopupText("Good!", transform);
 			player.aumento += 0.5f;
 			player.bonus += 1;
 			bonusText.text = player.bonus.ToString()+"x";
 
 		}
 		if( distanceNextLine < 0.2f && distanceNextLine >= 0 ){
-//			Debug.Log ("Perfect"+distanceNextLine);
+			//			Debug.Log ("Perfect"+distanceNextLine);
+			ControllerPopup.CreatingDamagePopupText("Perfect!", transform);
 			player.aumento += 0.5f;
 			player.bonus += 1;
 			bonusText.text = player.bonus.ToString()+"x";
