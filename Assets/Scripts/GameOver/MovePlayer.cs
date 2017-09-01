@@ -6,24 +6,36 @@ public class MovePlayer : MonoBehaviour {
 	GameObject playerMoviments;
 	PlayerMoviments savePositions;
 	List<Vector3> positionsPlayer;
+	List<Vector3> positionPlayerModify;
 	int i;
 	float speed;
+	bool notHaveMovments;
 	void Start(){
+		notHaveMovments = true;
+		positionPlayerModify = new List<Vector3> ();
 		i = 0;
-		speed = 10f;
+		speed = 30f;
 		playerMoviments = GameObject.Find ("PlayerMoviments");
-		savePositions = playerMoviments.GetComponent<PlayerMoviments>();
-		positionsPlayer = savePositions.PositionsMoviments;
-		Debug.Log (positionsPlayer.Count);
+		if (playerMoviments != null){
+			savePositions = playerMoviments.GetComponent<PlayerMoviments>();
+			notHaveMovments = false;
+		}
+		if (!notHaveMovments){
+			positionsPlayer = savePositions.PositionsMoviments;
+			foreach(Vector3 a in positionsPlayer){
+				positionPlayerModify.Add (new Vector3 (a.x * 0.2f, a.y * 0.2f));
+			}
+		}
 	}
 	
 //	 Update is called once per frame
 	void Update () {
-		transform.position = Vector3.Lerp (transform.position, positionsPlayer[i],Time.deltaTime*speed);
-		if (transform.position == positionsPlayer[i] &&  i < positionsPlayer.Count-1){
-			Debug.Log ("teste");
-			i += 1;
-			speed += 5f;
+		if (!notHaveMovments) {
+			transform.position = Vector3.Lerp (transform.position, positionPlayerModify [i], Time.deltaTime * speed);
+			if (transform.position == positionPlayerModify [i] && i < positionPlayerModify.Count - 1) {
+				i += 1;
+				speed += 5f;
+			}
 		}
 	}
 }

@@ -43,52 +43,57 @@ public class ControllerCreatePlataforms : MonoBehaviour {
 
 	void CreateNextLine(){
 		int randomDirection = Random.Range(0,100);
-		//up
+	
+		int firstProbability = 40;
+		int secondProbability = 61;
+
 		float distance = 7.9f;
+
+		//up
 		if (lastDirection.z == 0) { 
-			if (randomDirection <= 33){
+			if (randomDirection <= firstProbability){
 				InstantiateLines (left, new Vector3(0,distance,0));
 			}
-			if (randomDirection > 33 && randomDirection <= 67){
+			if (randomDirection > firstProbability && randomDirection <= secondProbability ){
 				InstantiateLines (up, new Vector3(0,distance-1,0));
 			}
-			if (randomDirection > 67 && randomDirection <= 100){
+			if (randomDirection > secondProbability){
 				InstantiateLines (right, new Vector3(0,distance,0));
 			}
 		}
 		//right
 		if (lastDirection.z == 270) {
-			if (randomDirection <= 33){
+			if (randomDirection <= firstProbability){
 				InstantiateLines (up, new Vector3(distance,0,0));
 			}
-			if (randomDirection > 33 && randomDirection <= 67){
+			if (randomDirection > firstProbability && randomDirection <= secondProbability){
 				InstantiateLines (right, new Vector3(distance-1,0,0));
 			}
-			if (randomDirection > 67 && randomDirection <= 100){
+			if (randomDirection > secondProbability){
 				InstantiateLines (down, new Vector3(distance,0,0));
 			}
 		}
 		//down
 		if (lastDirection.z == 180) {
-			if (randomDirection <= 33){
+			if (randomDirection <= firstProbability){
 				InstantiateLines (right, new Vector3(0,-distance,0));
 			}
-			if (randomDirection > 33 && randomDirection <= 67){
+			if (randomDirection > firstProbability && randomDirection <= secondProbability){
 				InstantiateLines (down, new Vector3(0,-distance+1,0));
 			}
-			if (randomDirection > 67 && randomDirection <= 100){
+			if (randomDirection > secondProbability){
 				InstantiateLines (left, new Vector3(0,-distance,0));
 			}
 		}
 		//left
 		if (lastDirection.z == 90) {
-			if (randomDirection <= 33){
+			if (randomDirection <= firstProbability){
 				InstantiateLines (left, new Vector3(-distance+1,0,0));
 			}
-			if (randomDirection > 33 && randomDirection <= 67){
+			if (randomDirection > firstProbability && randomDirection <= secondProbability){
 				InstantiateLines (down, new Vector3(-distance,0,0));
 			}
-			if (randomDirection > 67 && randomDirection <= 100){
+			if (randomDirection > secondProbability ){
 				InstantiateLines (up, new Vector3(-distance,0,0));
 			}
 		}

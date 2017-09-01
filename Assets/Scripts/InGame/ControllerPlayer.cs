@@ -15,7 +15,7 @@ public class ControllerPlayer : MonoBehaviour {
 	public GameObject linesObjects;
 	GameObject playerMoviments;
 	PlayerMoviments savePositions;
-	public List<Vector3> positionsMoviments;
+
 	public static Swipe swipeDirection;
 
 	// Use this for initialization
@@ -57,6 +57,7 @@ public class ControllerPlayer : MonoBehaviour {
 
 	public void CheckGameOver (){
 		if (!player.inLine) {
+			savePositions.SavePositionsPlayer(transform.position);
 			DontDestroyOnLoad (playerMoviments);
 			SceneManager.LoadScene (1);
 		}
@@ -177,9 +178,10 @@ public class ControllerPlayer : MonoBehaviour {
 
 	void CheckBonusPoints(){
 		float distanceNextLine = Vector3.Distance (linesObjects.transform.GetChild(1).transform.position, transform.position);
-//		Debug.Log ("erro: " + distanceNextLine);
 
+//		save Positions player
 		savePositions.SavePositionsPlayer (transform.position);
+
 		if( distanceNextLine >= 0.5){
 //			Debug.Log ("Bad"+distanceNextLine);
 			ControllerPopup.CreatingDamagePopupText("Bad!", transform);
