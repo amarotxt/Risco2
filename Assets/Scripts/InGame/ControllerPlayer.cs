@@ -57,20 +57,18 @@ public class ControllerPlayer : MonoBehaviour {
 
 	public void CheckGameOver (){
 		if (!player.inLine) {
+			SetRecords ();
 			savePositions.SavePositionsPlayer(transform.position);
 			DontDestroyOnLoad (playerMoviments);
-			SetRecords ();
 			SceneManager.LoadScene (1);
 		}
 	}
 
 	void SetRecords(){
 		PlayerPrefs.SetFloat ("points", player.points);
+
 		if (player.points > PlayerPrefs.GetFloat("record")){
 			PlayerPrefs.SetFloat ("record", player.points);
-		}
-		if (player.bonus > PlayerPrefs.GetFloat("bonus")){
-			PlayerPrefs.SetFloat ("bonus", player.bonus);
 		}
 	}
 	void OnTriggerStay2D(Collider2D other) {
@@ -187,7 +185,10 @@ public class ControllerPlayer : MonoBehaviour {
 
 	void CheckBonusPoints(){
 		float distanceNextLine = Vector3.Distance (linesObjects.transform.GetChild(1).transform.position, transform.position);
-
+// 		set bonus
+		if (player.bonus > PlayerPrefs.GetFloat("bonus")){
+			PlayerPrefs.SetFloat ("bonus", player.bonus);
+		}
 //		save Positions player
 		savePositions.SavePositionsPlayer (transform.position);
 
