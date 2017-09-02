@@ -59,10 +59,20 @@ public class ControllerPlayer : MonoBehaviour {
 		if (!player.inLine) {
 			savePositions.SavePositionsPlayer(transform.position);
 			DontDestroyOnLoad (playerMoviments);
+			SetRecords ();
 			SceneManager.LoadScene (1);
 		}
 	}
 
+	void SetRecords(){
+		PlayerPrefs.SetFloat ("points", player.points);
+		if (player.points > PlayerPrefs.GetFloat("record")){
+			PlayerPrefs.SetFloat ("record", player.points);
+		}
+		if (player.bonus > PlayerPrefs.GetFloat("bonus")){
+			PlayerPrefs.SetFloat ("bonus", player.bonus);
+		}
+	}
 	void OnTriggerStay2D(Collider2D other) {
 		if (other.gameObject.CompareTag("Line")){
 			player.inLine = true;
@@ -72,7 +82,6 @@ public class ControllerPlayer : MonoBehaviour {
 	void OnTriggerExit2D(Collider2D other) {
 		if (other.gameObject.CompareTag("Line")){
 			player.inLine = false;
-
 			player.gameOverRoutine = StartCoroutine("GameOverRoutine");
 		}
 	}
