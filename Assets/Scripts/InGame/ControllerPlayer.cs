@@ -210,8 +210,8 @@ public class ControllerPlayer : MonoBehaviour {
 		if( distanceNextLine < 0.2f && distanceNextLine >= 0 ){
 			//			Debug.Log ("Perfect"+distanceNextLine);
 			ControllerPopup.CreatingDamagePopupText("Perfect!", transform);
-			player.aumento += 0.5f;
-			player.bonus += 1;
+			player.aumento += 1f;
+			player.bonus += 2;
 			bonusText.text = player.bonus.ToString()+"x";
 
 		}
