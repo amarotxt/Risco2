@@ -9,6 +9,8 @@ public class ControllerMenu : MonoBehaviour {
 	Text pointsValue;
 	Text bestPointsValue;
 	Text bonusValue;
+	public GameObject painelTutorial;
+	int parentPosition;
 
 	void Start(){
 		bestPointsValue = GameObject.Find ("BestPointsValue").GetComponent<Text> ();
@@ -27,5 +29,34 @@ public class ControllerMenu : MonoBehaviour {
 			Destroy (playerMoviments);
 		}
 		SceneManager.LoadScene (1);
+	}
+
+	public void OpenTutorial (){
+		painelTutorial.SetActive (true);
+	}
+	public void CloseTutorial(){
+		painelTutorial.SetActive (false);
+	}
+
+	public void NextPainelTuroial(){
+		parentPosition += 1;
+		if (parentPosition >= 2 ) {
+			parentPosition = 2;
+		} 
+		DesativarPaineisTutorial ();
+		painelTutorial.transform.GetChild (parentPosition).gameObject.SetActive (true);
+	}
+	public void BackPainelTuroial(){
+		parentPosition -= 1;
+		if (parentPosition <= 0 ) {
+			parentPosition = 0;
+		}
+		DesativarPaineisTutorial ();
+		painelTutorial.transform.GetChild (parentPosition).gameObject.SetActive (true);
+	}
+	void DesativarPaineisTutorial(){
+		for(int i=0;i<=2; i++){
+			painelTutorial.transform.GetChild (i).gameObject.SetActive (false);
+		}
 	}
 }
