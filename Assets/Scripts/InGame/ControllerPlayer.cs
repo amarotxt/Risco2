@@ -52,12 +52,10 @@ public class ControllerPlayer : MonoBehaviour {
 	}
 	IEnumerator GameOverRoutine(){
 		yield return new WaitForSeconds (0.9f);
-		Debug.Log ("2"+player.inLine);
 		CheckGameOver ();
 	}
 
 	public void CheckGameOver (){
-		Debug.Log ("3"+player.inLine);
 
 		if (!player.inLine) {
 			SetRecords ();
@@ -79,7 +77,6 @@ public class ControllerPlayer : MonoBehaviour {
 	void OnTriggerExit2D(Collider2D other) {
 		if (other.gameObject.CompareTag("Line")){
 			player.inLine = false;
-			Debug.Log ("1"+player.inLine);
 			player.gameOverRoutine = StartCoroutine("GameOverRoutine");
 
 		}
