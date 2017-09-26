@@ -51,7 +51,7 @@ public class ControllerPlayer : MonoBehaviour {
 
 	}
 	IEnumerator GameOverRoutine(){
-		yield return new WaitForSeconds (0.9f);
+		yield return new WaitForSeconds (0.5f);
 		CheckGameOver ();
 	}
 
@@ -77,8 +77,10 @@ public class ControllerPlayer : MonoBehaviour {
 	void OnTriggerExit2D(Collider2D other) {
 		if (other.gameObject.CompareTag("Line")){
 			player.inLine = false;
+			if (player.gameOverRoutine != null){
+				StopCoroutine (player.gameOverRoutine);
+			}
 			player.gameOverRoutine = StartCoroutine("GameOverRoutine");
-
 		}
 	}
 
