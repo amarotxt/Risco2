@@ -51,7 +51,7 @@ public class ControllerPlayer : MonoBehaviour {
 
 	}
 	IEnumerator GameOverRoutine(){
-		yield return new WaitForSeconds (1f);
+		yield return new WaitForSeconds (0.9f);
 		Debug.Log ("2"+player.inLine);
 		CheckGameOver ();
 	}
