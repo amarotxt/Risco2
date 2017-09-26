@@ -26,6 +26,6 @@ public class ControllerMenu : MonoBehaviour {
 		if (playerMoviments != null){
 			Destroy (playerMoviments);
 		}
-		SceneManager.LoadScene (0);
+		SceneManager.LoadScene (1);
 	}
 }

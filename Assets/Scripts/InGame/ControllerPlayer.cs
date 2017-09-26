@@ -51,16 +51,19 @@ public class ControllerPlayer : MonoBehaviour {
 
 	}
 	IEnumerator GameOverRoutine(){
-		yield return new WaitForSeconds (0.5f);
+		yield return new WaitForSeconds (1f);
+		Debug.Log ("2"+player.inLine);
 		CheckGameOver ();
 	}
 
 	public void CheckGameOver (){
+		Debug.Log ("3"+player.inLine);
+
 		if (!player.inLine) {
 			SetRecords ();
 			savePositions.SavePositionsPlayer(transform.position);
 			DontDestroyOnLoad (playerMoviments);
-			SceneManager.LoadScene (1);
+			SceneManager.LoadScene (0);
 		}
 	}
 
@@ -71,19 +74,22 @@ public class ControllerPlayer : MonoBehaviour {
 			PlayerPrefs.SetFloat ("record", player.points);
 		}
 	}
+
+
+	void OnTriggerExit2D(Collider2D other) {
+		if (other.gameObject.CompareTag("Line")){
+			player.inLine = false;
+			Debug.Log ("1"+player.inLine);
+			player.gameOverRoutine = StartCoroutine("GameOverRoutine");
+
+		}
+	}
+
 	void OnTriggerStay2D(Collider2D other) {
 		if (other.gameObject.CompareTag("Line")){
 			player.inLine = true;
 		}
 	}
-
-	void OnTriggerExit2D(Collider2D other) {
-		if (other.gameObject.CompareTag("Line")){
-			player.inLine = false;
-			player.gameOverRoutine = StartCoroutine("GameOverRoutine");
-		}
-	}
-
 	void  CalcularPontuacao(){
 		
 		player.points = player.aumento + player.points;
