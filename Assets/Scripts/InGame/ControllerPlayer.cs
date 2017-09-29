@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public enum Swipe { None, Up, Down, Left, Right };
 
 public class ControllerPlayer : MonoBehaviour {
-	Player player;
+	public Player player;
 	public Text pointsText;
 	public Text bonusText;
 
@@ -90,8 +90,9 @@ public class ControllerPlayer : MonoBehaviour {
 		}
 	}
 	void  CalcularPontuacao(){
-		
+		if (!player.pauseGame){ 
 		player.points = player.aumento + player.points;
+		}
 //		if (player.points > PlayerPrefs.GetFloat ("Recorde")){
 //			if (podeTocarRecord && PlayerPrefs.GetFloat("Recorde") != 0) {
 //				ControladorAudio._instance.StartCoroutine("playRecord");
@@ -112,6 +113,7 @@ public class ControllerPlayer : MonoBehaviour {
 				player.firstPressPos = new Vector2 (t.position.x, t.position.y);
 			}
 			if (t.phase == TouchPhase.Moved) {
+				Debug.Log ("teste");
 				player.secondPressPos = new Vector2 (t.position.x, t.position.y);
 				player.currentSwipe = new Vector3 (player.secondPressPos.x - player.firstPressPos.x, player.secondPressPos.y - player.firstPressPos.y);
 				if (player.currentSwipe.magnitude < player.minSwipeLength) {

@@ -23,7 +23,7 @@ public class Player {
 	public Vector2 secondClickPos;
 
 	public bool inLine;
-
+	public bool pauseGame;
 //	public float Points{get;set;}
 //	public int Bonus{get;set;}
 //	public float Aumento{get;set;}
