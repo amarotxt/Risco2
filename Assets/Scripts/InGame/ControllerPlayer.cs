@@ -112,8 +112,8 @@ public class ControllerPlayer : MonoBehaviour {
 
 				player.firstPressPos = new Vector2 (t.position.x, t.position.y);
 			}
-			if (t.phase == TouchPhase.Moved) {
-				Debug.Log ("teste");
+			if (t.phase == TouchPhase.Ended) {
+
 				player.secondPressPos = new Vector2 (t.position.x, t.position.y);
 				player.currentSwipe = new Vector3 (player.secondPressPos.x - player.firstPressPos.x, player.secondPressPos.y - player.firstPressPos.y);
 				if (player.currentSwipe.magnitude < player.minSwipeLength) {
@@ -125,24 +125,24 @@ public class ControllerPlayer : MonoBehaviour {
 				//Swipe directional check
 				if (player.direction.x != 0) { 
 					// Swipe up
-					if (player.currentSwipe.y > 0 && player.currentSwipe.x > -0.5f && player.currentSwipe.x < 0.5f) {
+					if (player.currentSwipe.y >  0.4  && player.currentSwipe.x > -0.5f && player.currentSwipe.x < 0.5f) {
 						CheckBonusPoints ();
 						player.direction = new Vector2 (0, 1);
 					}
 					// Swipe down
-					else if (player.currentSwipe.y < 0 && player.currentSwipe.x > -0.5f && player.currentSwipe.x < 0.5f) {
+					else if (player.currentSwipe.y <  -0.4  && player.currentSwipe.x > -0.5f && player.currentSwipe.x < 0.5f) {
 						CheckBonusPoints ();
 						player.direction = new Vector2 (0, -1);
 					}
 				}
 				if (player.direction.y != 0) {
 					// Swipe left
-					if (player.currentSwipe.x < 0 && player.currentSwipe.y > -0.5f && player.currentSwipe.y < 0.5f) {
+					if (player.currentSwipe.x < -0.4 && player.currentSwipe.y > -0.5f && player.currentSwipe.y < 0.5f) {
 						CheckBonusPoints ();
 						player.direction = new Vector2(-1,0);				
 					}
 					// Swipe right
-					else if (player.currentSwipe.x > 0 && player.currentSwipe.y > -0.5f && player.currentSwipe.y < 0.5f) {
+					else if (player.currentSwipe.x > 0.4 && player.currentSwipe.y > -0.5f && player.currentSwipe.y < 0.5f) {
 						CheckBonusPoints ();
 						player.direction = new Vector2(1,0);				
 					}
@@ -155,7 +155,7 @@ public class ControllerPlayer : MonoBehaviour {
 				swipeDirection = Swipe.None;
 			}
 
-			if (Input.GetMouseButtonUp (0)) {
+			if (Input.GetMouseButton (0)) {
 				player.secondClickPos = new Vector2 (Input.mousePosition.x, Input.mousePosition.y);
 				player.currentSwipe = new Vector3 (player.secondClickPos.x - player.firstClickPos.x, player.secondClickPos.y - player.firstClickPos.y);
 				//		
@@ -163,25 +163,26 @@ public class ControllerPlayer : MonoBehaviour {
 				//Swipe directional check
 				if (player.direction.x != 0) { 
 					// Swipe up
-					if (player.currentSwipe.y > 0 && player.currentSwipe.x > -0.5f && player.currentSwipe.x < 0.5f) {
+					if (player.currentSwipe.y > 0.4 && player.currentSwipe.x > -0.5f && player.currentSwipe.x < 0.5f) {
 						CheckBonusPoints ();
 						player.direction = new Vector2 (0, 1);
 
 					}
 					// Swipe down
-					else if (player.currentSwipe.y < 0 && player.currentSwipe.x > -0.5f && player.currentSwipe.x < 0.5f) {
+					else if (player.currentSwipe.y < -0.4 && player.currentSwipe.x > -0.5f && player.currentSwipe.x < 0.5f) {
 						CheckBonusPoints ();
 						player.direction = new Vector2 (0, -1);
 					}
 				}
 				if (player.direction.y != 0) {
 					// Swipe left
-					if (player.currentSwipe.x < 0 && player.currentSwipe.y > -0.5f && player.currentSwipe.y < 0.5f) {
+					if (player.currentSwipe.x < -0.4 && player.currentSwipe.y > -0.5f && player.currentSwipe.y < 0.5f) {
 						CheckBonusPoints ();
 						player.direction = new Vector2 (-1, 0);				
 					}
 					// Swipe right
-					else if (player.currentSwipe.x > 0 && player.currentSwipe.y > -0.5f && player.currentSwipe.y < 0.5f) {
+					else if (player.currentSwipe.x > 0.4 && player.currentSwipe.y > -0.5f && player.currentSwipe.y < 0.5f) {
+
 						CheckBonusPoints ();
 						player.direction = new Vector2 (1, 0);				
 					}
