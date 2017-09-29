@@ -112,7 +112,7 @@ public class ControllerPlayer : MonoBehaviour {
 
 				player.firstPressPos = new Vector2 (t.position.x, t.position.y);
 			}
-			if (t.phase == TouchPhase.Ended) {
+			if (t.phase == TouchPhase.Moved) {
 
 				player.secondPressPos = new Vector2 (t.position.x, t.position.y);
 				player.currentSwipe = new Vector3 (player.secondPressPos.x - player.firstPressPos.x, player.secondPressPos.y - player.firstPressPos.y);
