@@ -919,6 +919,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseButton: {fileID: 1422526883}
   playButton: {fileID: 1410177962}
+  player: {fileID: 1803343854}
 --- !u!1 &778776846
 GameObject:
   m_ObjectHideFlags: 0
@@ -1193,7 +1194,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
